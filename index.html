@@ -6,28 +6,32 @@
     <title>Para mi novia</title>
 
     <style>
+        /* BODY */
         body {
             margin: 0;
+            padding: 0;
+            width: 100vw;
             height: 100vh;
-            background: linear-gradient(to bottom, #ffdde1, #ee9ca7);
             overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
             font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #ffdde1, #ee9ca7);
         }
 
-  
+        /* TESTO CENTRALE */
         h1 {
             position: relative;
             z-index: 2;
-            font-size: 3.5em;
+            font-size: 8vw; /* responsive su mobile */
             text-align: center;
             color: #ffffff;
             text-shadow:
                 2px 2px 0 #c2185b,
                 0 0 15px rgba(194, 24, 91, 0.8);
             animation: pulse 3s ease-in-out infinite;
+            margin: 0;
         }
 
         @keyframes pulse {
@@ -35,12 +39,13 @@
             50% { transform: scale(1.05); }
         }
 
-    
+        /* CUORI CHE SALGONO */
         .heart {
             position: absolute;
             width: var(--size);
             height: var(--size);
-            background-color: red;
+            color: red;
+            background-color: currentColor;
             transform: rotate(-45deg);
             animation: rise 5s linear infinite;
             z-index: 1;
@@ -52,7 +57,7 @@
             position: absolute;
             width: var(--size);
             height: var(--size);
-            background-color: red;
+            background-color: currentColor;
             border-radius: 50%;
         }
 
@@ -67,22 +72,17 @@
         }
 
         @keyframes rise {
-            from {
-                transform: translateY(0) rotate(-45deg);
-                opacity: 1;
-            }
-            to {
-                transform: translateY(-120vh) rotate(-45deg);
-                opacity: 0;
-            }
+            from { transform: translateY(0) rotate(-45deg); opacity: 1; }
+            to { transform: translateY(-120vh) rotate(-45deg); opacity: 0; }
         }
 
-      
+        /* CUORI ESPLOSIONE CLICK/TAP */
         .explosion-heart {
             position: absolute;
             width: 12px;
             height: 12px;
-            background-color: red;
+            color: red;
+            background-color: currentColor;
             transform: rotate(-45deg);
             animation: explode 0.8s ease-out forwards;
             z-index: 3;
@@ -94,29 +94,16 @@
             position: absolute;
             width: 12px;
             height: 12px;
-            background-color: red;
+            background-color: currentColor;
             border-radius: 50%;
         }
 
-        .explosion-heart::before {
-            top: -6px;
-            left: 0;
-        }
-
-        .explosion-heart::after {
-            left: 6px;
-            top: 0;
-        }
+        .explosion-heart::before { top: -6px; left: 0; }
+        .explosion-heart::after { left: 6px; top: 0; }
 
         @keyframes explode {
-            from {
-                transform: translate(0, 0) scale(1) rotate(-45deg);
-                opacity: 1;
-            }
-            to {
-                transform: translate(var(--x), var(--y)) scale(0.3) rotate(-45deg);
-                opacity: 0;
-            }
+            from { transform: translate(0,0) scale(1) rotate(-45deg); opacity:1; }
+            to { transform: translate(var(--x), var(--y)) scale(0.3) rotate(-45deg); opacity:0; }
         }
     </style>
 </head>
@@ -126,14 +113,14 @@
 <h1>ti amo Aylynn💕</h1>
 
 <script>
-    
-    const numberOfHearts = 30;
+    /* CUORI CHE SALGONO */
+    const numberOfHearts = 20; // meno cuori su mobile per performance
 
     for (let i = 0; i < numberOfHearts; i++) {
         const heart = document.createElement('div');
         heart.classList.add('heart');
 
-        const size = Math.random() * 20 + 10;
+        const size = Math.random() * 8 + 8; // dimensione più piccola su mobile
         heart.style.setProperty('--size', size + 'px');
 
         heart.style.left = Math.random() * window.innerWidth + 'px';
@@ -143,32 +130,36 @@
         document.body.appendChild(heart);
     }
 
-   
-   
-document.addEventListener("click", (e) => {
-    const colors = ["#ff1744", "#ff4081", "#f50057", "#ffffff"];
+    /* CUORI CHE SCOPPANO AL CLICK/TAP */
+    function createExplosion(e) {
+        const colors = ["#ff1744", "#ff4081", "#f50057", "#ffffff"];
 
-    for (let i = 0; i < 10; i++) {
-        const heart = document.createElement("div");
-        heart.classList.add("explosion-heart");
+        // coordinate touch o click
+        const xCoord = e.touches ? e.touches[0].clientX : e.clientX;
+        const yCoord = e.touches ? e.touches[0].clientY : e.clientY;
 
-        const x = (Math.random() - 0.5) * 120 + "px";
-        const y = (Math.random() - 0.5) * 120 + "px";
+        for (let i = 0; i < 10; i++) {
+            const heart = document.createElement("div");
+            heart.classList.add("explosion-heart");
 
-        heart.style.setProperty("--x", x);
-        heart.style.setProperty("--y", y);
+            const x = (Math.random() - 0.5) * 120 + "px";
+            const y = (Math.random() - 0.5) * 120 + "px";
 
-        
-        heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+            heart.style.setProperty("--x", x);
+            heart.style.setProperty("--y", y);
 
-        heart.style.left = e.clientX + "px";
-        heart.style.top = e.clientY + "px";
+            heart.style.color = colors[Math.floor(Math.random() * colors.length)];
 
-        document.body.appendChild(heart);
+            heart.style.left = xCoord + "px";
+            heart.style.top = yCoord + "px";
 
-        setTimeout(() => heart.remove(), 800);
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 800);
+        }
     }
-});
+
+    document.addEventListener("click", createExplosion);
+    document.addEventListener("touchstart", createExplosion); // mobile
 </script>
 
 </body>

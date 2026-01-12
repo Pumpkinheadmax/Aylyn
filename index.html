@@ -1,165 +1,172 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para mi novia</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para mi novia</title>
 
-    <style>
-        /* BODY */
-        body {
-            margin: 0;
-            padding: 0;
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to bottom, #ffdde1, #ee9ca7);
-        }
+<style>
+body{
+    margin:0;
+    padding:0;
+    width:100vw;
+    height:100vh;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #ffdde1, #ee9ca7);
+}
 
-        /* TESTO CENTRALE */
-        h1 {
-            position: relative;
-            z-index: 2;
-            font-size: 8vw; /* responsive su mobile */
-            text-align: center;
-            color: #ffffff;
-            text-shadow:
-                2px 2px 0 #c2185b,
-                0 0 15px rgba(194, 24, 91, 0.8);
-            animation: pulse 3s ease-in-out infinite;
-            margin: 0;
-        }
+h1{
+    position:relative;
+    z-index:2;
+    font-size:8vw;
+    text-align:center;
+    color:#fff;
+    text-shadow:2px 2px 0 #c2185b, 0 0 15px rgba(194,24,91,.8);
+    animation:pulse 3s ease-in-out infinite;
+    margin:0;
+    transition:.5s;
+}
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
+/* effetto hover */
+h1:hover{
+    color:#fff176;
+    text-shadow:0 0 25px gold;
+}
 
-        /* CUORI CHE SALGONO */
-        .heart {
-            position: absolute;
-            width: var(--size);
-            height: var(--size);
-            color: red;
-            background-color: currentColor;
-            transform: rotate(-45deg);
-            animation: rise 5s linear infinite;
-            z-index: 1;
-        }
+@keyframes pulse{
+    0%,100%{transform:scale(1);}
+    50%{transform:scale(1.05);}
+}
 
-        .heart::before,
-        .heart::after {
-            content: "";
-            position: absolute;
-            width: var(--size);
-            height: var(--size);
-            background-color: currentColor;
-            border-radius: 50%;
-        }
+#secretText{
+    position:absolute;
+    bottom:15%;
+    color:white;
+    font-size:3vw;
+    opacity:0;
+    transition:opacity 1s;
+    text-shadow:0 0 10px rgba(255,255,255,.8);
+    z-index:2;
+}
 
-        .heart::before {
-            top: calc(var(--size) / -2);
-            left: 0;
-        }
+/* CUORI CHE SALGONO */
+.heart{
+    position:absolute;
+    width:var(--size);
+    height:var(--size);
+    color:red;
+    background-color:currentColor;
+    transform:rotate(-45deg);
+    animation:rise 5s linear infinite;
+    z-index:1;
+}
+.heart::before,.heart::after{
+    content:"";
+    position:absolute;
+    width:var(--size);
+    height:var(--size);
+    background-color:currentColor;
+    border-radius:50%;
+}
+.heart::before{top:calc(var(--size)/-2);left:0;}
+.heart::after{left:calc(var(--size)/2);top:0;}
 
-        .heart::after {
-            left: calc(var(--size) / 2);
-            top: 0;
-        }
+@keyframes rise{
+    from{transform:translateY(0) rotate(-45deg);opacity:1;}
+    to{transform:translateY(-120vh) rotate(-45deg);opacity:0;}
+}
 
-        @keyframes rise {
-            from { transform: translateY(0) rotate(-45deg); opacity: 1; }
-            to { transform: translateY(-120vh) rotate(-45deg); opacity: 0; }
-        }
+/* CUORI ESPLOSIONE */
+.explosion-heart{
+    position:absolute;
+    width:12px;
+    height:12px;
+    color:red;
+    background-color:currentColor;
+    transform:rotate(-45deg);
+    animation:explode .8s ease-out forwards;
+    z-index:3;
+}
+.explosion-heart::before,.explosion-heart::after{
+    content:"";
+    position:absolute;
+    width:12px;
+    height:12px;
+    background-color:currentColor;
+    border-radius:50%;
+}
+.explosion-heart::before{top:-6px;left:0;}
+.explosion-heart::after{left:6px;top:0;}
 
-        /* CUORI ESPLOSIONE CLICK/TAP */
-        .explosion-heart {
-            position: absolute;
-            width: 12px;
-            height: 12px;
-            color: red;
-            background-color: currentColor;
-            transform: rotate(-45deg);
-            animation: explode 0.8s ease-out forwards;
-            z-index: 3;
-        }
-
-        .explosion-heart::before,
-        .explosion-heart::after {
-            content: "";
-            position: absolute;
-            width: 12px;
-            height: 12px;
-            background-color: currentColor;
-            border-radius: 50%;
-        }
-
-        .explosion-heart::before { top: -6px; left: 0; }
-        .explosion-heart::after { left: 6px; top: 0; }
-
-        @keyframes explode {
-            from { transform: translate(0,0) scale(1) rotate(-45deg); opacity:1; }
-            to { transform: translate(var(--x), var(--y)) scale(0.3) rotate(-45deg); opacity:0; }
-        }
-    </style>
+@keyframes explode{
+    from{transform:translate(0,0) scale(1) rotate(-45deg);opacity:1;}
+    to{transform:translate(var(--x),var(--y)) scale(.3) rotate(-45deg);opacity:0;}
+}
+</style>
 </head>
 
 <body>
 
-<h1>ti amo Aylynn💕</h1>
+<h1>ti amo Aylynn 💕</h1>
+<p id="secretText"></p>
 
 <script>
-    /* CUORI CHE SALGONO */
-    const numberOfHearts = 20; // meno cuori su mobile per performance
+// cuori che salgono
+const numberOfHearts = 20;
+for(let i=0;i<numberOfHearts;i++){
+    const heart=document.createElement("div");
+    heart.classList.add("heart");
+    const size=Math.random()*8+8;
+    heart.style.setProperty("--size",size+"px");
+    heart.style.left=Math.random()*window.innerWidth+"px";
+    heart.style.bottom="-50px";
+    heart.style.animationDelay=Math.random()*5+"s";
+    document.body.appendChild(heart);
+}
 
-    for (let i = 0; i < numberOfHearts; i++) {
-        const heart = document.createElement('div');
-        heart.classList.add('heart');
+// esplosioni al click/touch
+function createExplosion(e){
+    const colors=["#ff1744","#ff4081","#f50057","#ffffff"];
+    const xCoord=e.touches?e.touches[0].clientX:e.clientX;
+    const yCoord=e.touches?e.touches[0].clientY:e.clientY;
 
-        const size = Math.random() * 8 + 8; // dimensione più piccola su mobile
-        heart.style.setProperty('--size', size + 'px');
-
-        heart.style.left = Math.random() * window.innerWidth + 'px';
-        heart.style.bottom = '-50px';
-        heart.style.animationDelay = Math.random() * 5 + 's';
-
+    for(let i=0;i<10;i++){
+        const heart=document.createElement("div");
+        heart.classList.add("explosion-heart");
+        heart.style.setProperty("--x",(Math.random()-.5)*120+"px");
+        heart.style.setProperty("--y",(Math.random()-.5)*120+"px");
+        heart.style.color=colors[Math.floor(Math.random()*colors.length)];
+        heart.style.left=xCoord+"px";
+        heart.style.top=yCoord+"px";
         document.body.appendChild(heart);
+        setTimeout(()=>heart.remove(),800);
     }
+}
+document.addEventListener("click",createExplosion);
+document.addEventListener("touchstart",createExplosion);
 
-    /* CUORI CHE SCOPPANO AL CLICK/TAP */
-    function createExplosion(e) {
-        const colors = ["#ff1744", "#ff4081", "#f50057", "#ffffff"];
-
-        // coordinate touch o click
-        const xCoord = e.touches ? e.touches[0].clientX : e.clientX;
-        const yCoord = e.touches ? e.touches[0].clientY : e.clientY;
-
-        for (let i = 0; i < 10; i++) {
-            const heart = document.createElement("div");
-            heart.classList.add("explosion-heart");
-
-            const x = (Math.random() - 0.5) * 120 + "px";
-            const y = (Math.random() - 0.5) * 120 + "px";
-
-            heart.style.setProperty("--x", x);
-            heart.style.setProperty("--y", y);
-
-            heart.style.color = colors[Math.floor(Math.random() * colors.length)];
-
-            heart.style.left = xCoord + "px";
-            heart.style.top = yCoord + "px";
-
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 800);
-        }
-    }
-
-    document.addEventListener("click", createExplosion);
-    document.addEventListener("touchstart", createExplosion); // mobile
+// frasi segrete
+const frasi=[
+ "sei la mia casa.",
+ "io ti scelgo ogni giorno.",
+ "sei il mio posto sicuro.",
+ "sei la mia pace.",
+ "sei la cosa più vera che ho."
+];
+let i=0;
+setInterval(()=>{
+  const el=document.getElementById("secretText");
+  el.style.opacity=0;
+  setTimeout(()=>{
+    el.textContent=frasi[i%frasi.length];
+    el.style.opacity=1;
+    i++;
+  },1000);
+},5000);
 </script>
 
 </body>
